@@ -5,16 +5,20 @@ namespace SteamWishlistTtBGraphQL.Services
 {
     public class SteamService : ISteamService
     {
-        private HttpClient _httpClient;
+        private readonly IConfigurationService _configurationService;
 
-        public SteamService()
+        private readonly HttpClient _httpClient;
+
+        public SteamService(IConfigurationService configurationService)
         {
+            _configurationService = configurationService;
+
             _httpClient = new();
         }
 
         public async Task<List<SteamGameModel>> GetSteamGamesAsync(string userId)
         {
-            var response = await _httpClient.GetAsync($"https://store.steampowered.com/wishlist/profiles/{userId}/wishlistdata/?p=0");
+            var response = await _httpClient.GetAsync(_configurationService.SteamWishlistEndpoint(userId));
             var json = await response.Content.ReadAsStringAsync();
             var gameData = JsonConvert.DeserializeObject<Dictionary<string, SteamGameModel>>(json);
 
