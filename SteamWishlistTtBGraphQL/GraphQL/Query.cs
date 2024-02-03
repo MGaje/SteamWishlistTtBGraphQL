@@ -6,8 +6,8 @@ namespace SteamWishlistTtBGraphQL.GraphQL
 {
     public class Query
     {
-        public async Task<List<Game>> GetGamesAsync(string userId, [Service] ISteamService steamService) 
-            => (await steamService.GetSteamGamesAsync(userId))
-                .Select(x => Game.FromSteamGame(x)).ToList();
+        [UseFiltering]
+        public async Task<List<Game>> GetGamesAsync(string userId, [Service] ISteamTTBService steamTTBService)
+            => await steamTTBService.GetGameDataAsync(userId);
     }
 }

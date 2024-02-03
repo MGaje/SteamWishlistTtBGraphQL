@@ -10,6 +10,6 @@
         }
 
         public string SteamWishlistEndpoint(string userId) => _configuration.GetValue<string>("Endpoints:SteamWishlist")!.Replace("{{USER_ID}}", userId);
-        public string HowLongToBeatApiSearchEndpoint() => _configuration.GetValue<string>("Endpoints:HLTBApiSearch")!;
+        public string HowLongToBeatApiSearchEndpoint(string searchQuery) => _configuration.GetValue<string>("Endpoints:HLTBApiSearch")!.Replace("{{SEARCH_QUERY}}", searchQuery);
     }
 }

@@ -11,6 +11,7 @@ namespace SteamWishlistTtBGraphQL
                 .AddCors()
                 .AddServices()
                 .AddGraphQLServer()
+                .AddFiltering()
                 .AddQueryType<Query>();
         }
 
@@ -24,7 +25,9 @@ namespace SteamWishlistTtBGraphQL
         public static IServiceCollection AddScopedServices(this IServiceCollection services) 
         {
             return services
-                .AddScoped<ISteamService, SteamService>();
+                .AddScoped<ISteamService, SteamService>()
+                .AddScoped<IHLTBService, HLTBService>()
+                .AddScoped<ISteamTTBService, SteamTTBService>();
         }
 
         public static IServiceCollection AddSingletonServices(this IServiceCollection services)
