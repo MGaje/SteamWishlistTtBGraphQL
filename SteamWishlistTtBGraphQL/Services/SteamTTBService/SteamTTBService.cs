@@ -17,6 +17,11 @@ namespace SteamWishlistTtBGraphQL.Services
         public async Task<List<Game>> GetGameDataAsync(string userId)
         {
             var steamGames = await _steamService.GetSteamGamesAsync(userId);
+            if (!steamGames.Any())
+            {
+                return new List<Game>();
+            }
+
             var gamesWithData = new List<Game>();
 
             foreach (var game in steamGames)
@@ -32,6 +37,24 @@ namespace SteamWishlistTtBGraphQL.Services
             }
 
             return gamesWithData;
+        }
+
+        public async Task<Game> GetSingleGameAsync(string userId, string gameName)
+        {
+            var steamGames = await _steamService.GetSteamGamesAsync(userId);
+            if (!steamGames.Any())
+            {
+                return Game.NonExistentGame();
+            }
+
+            var targetGame = steamGames.FirstOrDefault(game => game.Name == gameName);
+            if (targetGame is null)
+            {
+                return Game.NonExistentGame("Target Game Not Found in Wishlist");
+            }
+
+            var searchResults = await _hltbService.SearchForGameAsync(gameName);
+            return new Game(targetGame, searchResults[0]);
         }
     }
 }

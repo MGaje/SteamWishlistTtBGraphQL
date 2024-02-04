@@ -31,6 +31,19 @@ namespace SteamWishlistTtBGraphQL.GraphQL.Schema
             TimeToBeatCompletionist = hltbResult.GameplayCompletionist;
         }
 
+        public static Game NonExistentGame(string? nameDescriptor = null)
+        {
+            return new Game
+            {
+                Name = nameDescriptor ?? "Not Found",
+                ReleaseDate = string.Empty,
+                ReleaseDateString = string.Empty,
+                TimeToBeat = short.MinValue,
+                TimeToBeatExtra = short.MinValue,
+                TimeToBeatCompletionist = short.MinValue
+            };
+        }
+
         public static Game FromSteamGame(SteamGameModel steamGame)
         {
             return new Game
