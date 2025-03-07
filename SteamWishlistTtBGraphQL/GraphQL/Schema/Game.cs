@@ -5,18 +5,11 @@ namespace SteamWishlistTtBGraphQL.GraphQL.Schema
     public class Game
     {
         public string Title { get; set; }
-        public string ReleaseDate { get; set; }
-        public string ReleaseDateString { get; set; }
 
 
-        public static Game FromSteamGame(SteamGameModel steamGame)
+        public static Game FromSteamGame(SteamGameModel steamGame) => new Game
         {
-            return new Game
-            {
-                Title = steamGame.Name,
-                ReleaseDate = steamGame.ReleaseDate,
-                ReleaseDateString = steamGame.ReleaseDateString
-            };
-        }
+            Title = steamGame.Name
+        };
     }
 }

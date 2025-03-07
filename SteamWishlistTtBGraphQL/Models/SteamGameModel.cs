@@ -7,10 +7,8 @@ namespace SteamWishlistTtBGraphQL.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("release_date")]
-        public string ReleaseDate { get; set; }
+        [JsonProperty("appId")]
+        public string AppId { get; set; }
 
-        [JsonProperty("release_string")]
-        public string ReleaseDateString { get; set; }
     }
 }

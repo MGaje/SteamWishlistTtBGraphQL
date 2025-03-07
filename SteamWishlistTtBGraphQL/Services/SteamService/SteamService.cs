@@ -1,29 +1,27 @@
 ﻿using Newtonsoft.Json;
 using SteamWishlistTtBGraphQL.Models;
+using SteamWishlistTtBGraphQL.Responses.Steam;
+using SteamWishlistTtBGraphQL.Services.SecretsService;
 
 namespace SteamWishlistTtBGraphQL.Services
 {
-    public class SteamService : ISteamService
+    public class SteamService(ISecretsService secretsService) : ISteamService
     {
-        private HttpClient _httpClient;
-
-        public SteamService()
-        {
-            _httpClient = new();
-        }
+        private readonly HttpClient _httpClient = new();
 
         public async Task<List<SteamGameModel>> GetSteamGamesAsync(string userId)
         {
-            var response = await _httpClient.GetAsync($"https://store.steampowered.com/wishlist/profiles/{userId}/wishlistdata/?p=0");
+            var steamSettings = secretsService.GetSteamSettings();
+            var response = await _httpClient.GetAsync($"http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={steamSettings.ApiKey}&steamid={userId}&include_appinfo=1&format=json");
             var json = await response.Content.ReadAsStringAsync();
-            var gameData = JsonConvert.DeserializeObject<Dictionary<string, SteamGameModel>>(json);
 
-            if (gameData is null)
+            var steamGameDataResponse = JsonConvert.DeserializeObject<Dictionary<string, SteamOwnedGamesResponse>>(json);
+            if (steamGameDataResponse is null || steamGameDataResponse["response"] is null)
             {
                 return new List<SteamGameModel>();
             }
 
-            return gameData.Values.ToList();
+            return steamGameDataResponse["response"].Games;
         }
     }
 }
