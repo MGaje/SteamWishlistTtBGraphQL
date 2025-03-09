@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using SteamWishlistTtBGraphQL.Models;
 
-namespace SteamWishlistTtBGraphQL.Responses.Steam
+namespace SteamWishlistTtBGraphQL.Models.Responses
 {
     public class SteamOwnedGamesResponse
     {

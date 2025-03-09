@@ -2,12 +2,11 @@
 
 namespace SteamWishlistTtBGraphQL.GraphQL.Schema
 {
-    public class Game
+    public class MyGame
     {
         public string Title { get; set; }
 
-
-        public static Game FromSteamGame(SteamGameModel steamGame) => new Game
+        public static MyGame FromSteamGame(SteamGameModel steamGame) => new MyGame
         {
             Title = steamGame.Name
         };

@@ -1,6 +1,5 @@
 ﻿using SteamWishlistTtBGraphQL.GraphQL;
 using SteamWishlistTtBGraphQL.Services;
-using SteamWishlistTtBGraphQL.Services.SecretsService;
 
 namespace SteamWishlistTtBGraphQL
 {
@@ -20,6 +19,8 @@ namespace SteamWishlistTtBGraphQL
         {
             return services
                 .AddScoped<ISecretsService, SecretsService>()
+                .AddScoped<IIGDBService, IGDBService>()
+                .AddScoped<IQueryService, QueryService>()
                 .AddScoped<ISteamService, SteamService>();
         }
     }
