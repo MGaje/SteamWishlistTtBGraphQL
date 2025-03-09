@@ -4,6 +4,6 @@ namespace SteamWishlistTtBGraphQL.Services
 {
     public interface ISteamService
     {
-        Task<List<SteamGameModel>> GetSteamGamesAsync(string userId);
+        Task<IEnumerable<SteamGameModel>> GetSteamGamesAsync(string userId);
     }
 }
